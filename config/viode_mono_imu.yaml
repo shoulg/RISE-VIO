@@ -1,0 +1,116 @@
+# rb-vins多源融合定位算法配置文件
+
+# 结果输出路径
+# Output directory
+outputpath: "/sad/catkin_ws/src/rb_vins/tmp_output/viode/251220"
+is_make_outputdir: true
+
+# 时间信息, s
+# Time length for GNSS/INS intialization
+initlength: 1
+
+# IMU原始数据频率, Hz
+# IMU sample rate
+imudatarate: 200
+
+# 考虑地球自转补偿项
+# Consider the Earth rotation
+iswithearth: false
+
+# 天线杆臂, IMU前右下方向, m
+# GNSS lever-arm in IMU body frame (front-right-down)
+antlever: [0.07, 0, -0.23]
+
+# IMU噪声建模参数
+# IMU noise parameters
+imumodel:
+    # arw: 0.2        # deg/sqrt(hr)
+    # vrw: 0.5        # m/s/sqrt(hr)
+    # gbstd: 10.0     # deg/hr
+    # abstd: 150.0     # mGal
+    # corrtime: 1.0   # hr
+    arw: 0.8        # deg/sqrt(hr)
+    vrw: 1.4        # m/s/sqrt(hr)
+    gbstd: 160.0     # deg/hr
+    abstd: 280.0     # mGal
+    corrtime: 4.0   # hr
+
+# GNSS中断配置
+# GNSS outage configurations, the GNSS will not be used after the gnssoutagetime 
+isusegnssoutage: false
+gnssoutagetime: 364461.5
+
+# 固定阈值GNSS抗差
+# A fixed threshold (STD, m) for GNSS outlier culling
+gnssthreshold: 5
+
+# 是否开启可视化
+# Use visualization
+is_use_visualization: true
+
+# 跟踪
+# Tracking configurations
+track_check_histogram: false    # 直方图检查, 避免出现光照变化较大的图像 (Check histogram for drastic illumulation change)
+track_min_parallax: 10          # 关键帧最小像素视差 (The minmum parallax in pixels to choose a keyframe) 15
+track_max_interval: 0.18        # 最大的关键帧间隔, 超过则插入观测帧, s (The maximum lenght to choose a observation frame)
+track_max_features: 200         # 最大提取特征数量 (The maximum features to detect, may be more or less, see tracking.cc) 200
+
+initial_deltatime: 0.13
+feature_density_scale: 2.0
+gnc_epnp_noise: 0.000064        #0.005
+offset: 200                   #延时唤醒gnc-epnp
+triangulate_parallax: 10
+initial_triangulate_parallax: 10
+
+# 室外修改最大深度 200
+
+# 优化
+# Optimization configurations
+reprojection_error_std: 1.2         # 像素重投影误差 (The reprojection error std for optimizition and outlier culling) 1.5
+optimize_windows_size: 10           # 滑动窗口大小 (The size of the sliding window, number of the keyframes )
+optimize_num_iterations: 32         # 优化迭代次数 (The iterations in total)
+optimize_estimate_extrinsic: false  # 是否估计相机和IMU的外参 (Estimate the extrinsic)
+optimize_estimate_td: false          # 否估计相机和IMU之间的时间间隔 (Estimate the time delay)
+
+# Control 可观性参数
+min_parallax_spd: 0.15
+max_good_parallax_count: 50
+
+noise_bound_sq: 0.00024             #gnc控制参数 0.00008 0.0025
+reprojection_error_std_scale: 1.0
+
+# Camera parameters
+cam0:
+    # 内参 [fx, fy, cx, cy(, skew)]
+    # Intrinsic parameters, pinhole model
+    intrinsic:
+        [
+            376.0,
+            376.0,
+            376.0,
+            240.0,
+        ]
+
+    # 畸变参数 [k1, k2, p1, p2(, k3)]
+    # Distortion parameters
+    distortion:
+        [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+        ]
+
+    # 图像分辨率
+    # Resolution
+    resolution: [752, 480]
+
+    # 相机IMU外参 (Camera-IMU extrinsic)
+    # Pb = q_b_c * Pc + t_b_c
+    # q (x, y, z, w)
+    q_b_c: [0.500000000000000, 0.500000000000000, 0.500000000000000, 0.500000000000000]
+    t_b_c: [0.000000000000000, 0.000000000000000, 0.000000000000000]
+
+    # IMU和相机时间延时 (The time delay between the IMU and camera)
+    # t_i = t_c + td
+    td_b_c: 0.0

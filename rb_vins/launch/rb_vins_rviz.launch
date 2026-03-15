@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_map_broadcaster"
+          args="0 0 0 -1 0 0 0 map world"/>
+    <node name="visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find rb_vins)/../config/visualization.rviz"/>
+
+</launch>

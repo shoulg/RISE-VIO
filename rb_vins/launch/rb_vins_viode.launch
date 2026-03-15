@@ -1,0 +1,14 @@
+<launch>
+    <arg name="configfile" default="/sad/catkin_ws/src/rb_vins/config/viode_mono_imu.yaml"/>
+
+    <node name="rb_vins_node" pkg="rb_vins" type="rb_vins_ros" output="screen">
+        <param name="imu_topic" value="/imu0"/>
+        <param name="image_topic" value="/cam0/image_raw"/>
+        
+        <param name="configfile" value="$(arg configfile)"/>
+    </node>
+
+    <node pkg="tf2_ros" type="static_transform_publisher" name="world_to_map_broadcaster"
+          args="0 0 0 1 0 0 0 map world"/>
+    <node name="visualisation" pkg="rviz" type="rviz" output="log" args="-d $(find rb_vins)/../config/visualization.rviz"/>
+</launch>

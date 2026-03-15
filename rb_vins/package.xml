@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>rb_vins</name>
+    <version>1.0.0</version>
+    <description>The RB_VINS ROS Interface</description>
+
+    <license>GPLv3</license>
+
+    <maintainer email="xxx@gmail.com">juran</maintainer>
+    <author email="xxx@gmail.com">juran</author>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <depend>roscpp</depend>
+    <depend>std_msgs</depend>
+
+</package>

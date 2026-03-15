@@ -1,0 +1,14 @@
+myoutput/
+output/
+tmp_output/
+build/
+devel/
+logs/
+log/
+*.bag
+*.zip
+*.log
+__pycache__/
+*.pyc
+.vscode/
+.idea/
